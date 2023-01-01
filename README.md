@@ -44,15 +44,22 @@ This naturally supports sparse formats where elements with the value 0 can be dr
 
 **Federated Learning**
 
-We will also explore Byzantine resilience for federated residual learning learning. At each step, the downstream clients will provide the "latest" model weights and labels to the server. It is then up the server to determine how to combine these candidate weights.
+As we are using Nelder-Mead method for choosing the weights, and keeping a history of the set weights, we can offer Byzantine resilience when performing federated learning. 
 
-There are many algorithms that offer Byzantine resilience guarentees under gradient descent, including: 
+Possible algorithms to support aggregated weights include:
 
 - Coordinate-Wide Median
 - Geometric Mean
 - Mean around median
 
-We will have to verify them theoretically in the scenario we are updating weights via Nelder-Mead.  
+Proposed interface:
+
+```sh
+tinymlkit <model-name> -m <federated_model.tmk> -m <federated_model.tmk> -m <federated_model.tmk> -m <federated_model.tmk> -f <model.tmk>
+```
+
+Note that the `federated_model.tmk` file may contain summarised information about the underlying model. If `model.tmk` does not exist, it will be created through aggregation. 
+
 
 ## Roadmap
 
