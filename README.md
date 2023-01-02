@@ -21,7 +21,7 @@ To keep things simple, we will target CLI only. The interface would resemble:
 
 ```sh
 # training
-tinymlkit <model-name> -d <data.txt> -f <model.tmk>
+tinymlkit <model-name> -d <data.txt> -r <replay_buffer.txt> -f <model.tmk>
 # prediction
 tinymlkit <model-name> -d <data.txt> -i <model.tmk> -p <output.txt>
 ``` 
