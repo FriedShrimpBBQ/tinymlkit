@@ -55,7 +55,7 @@ Possible algorithms to support aggregated weights include:
 Proposed interface:
 
 ```sh
-tinymlkit <model-name> -m <federated_model.tmk> -m <federated_model.tmk> -m <federated_model.tmk> -m <federated_model.tmk> -f <model.tmk>
+tinymlkit <model-name> -r <federated_replay_buffer.txt> -r <federated_replay_buffer.txt> -r <federated_replay_buffer.txt> -f <model.tmk>
 ```
 
 Note that the `federated_model.tmk` file may contain summarised information about the underlying model. If `model.tmk` does not exist, it will be created through aggregation. 
