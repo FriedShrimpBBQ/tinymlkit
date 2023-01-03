@@ -1,4 +1,7 @@
 
 
 easyjson:
-	easyjson -all linear_model/linear_model.go
+  easyjson -all linear_model/linear_model.go
+	
+tests:
+  cd linear_model && go test
