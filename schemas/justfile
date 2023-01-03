@@ -1,0 +1,4 @@
+
+
+easyjson:
+	easyjson -all linear_model/linear_model.go
