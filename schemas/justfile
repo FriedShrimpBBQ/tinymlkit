@@ -1,7 +1,10 @@
-
+# For windows `just --shell powershell.exe --shell-arg -c`
 
 easyjson:
   easyjson -all linear_model/linear_model.go
 	
 tests:
   cd linear_model && go test
+  
+format:
+  gofmt -w . 
