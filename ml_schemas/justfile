@@ -1,0 +1,9 @@
+# For windows `just --shell powershell.exe --shell-arg -c`
+
+
+easyjson:
+  easyjson -all linear_model.go
+  easyjson -all dataset.go
+  
+test:
+  go test
