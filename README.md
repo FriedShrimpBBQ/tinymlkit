@@ -21,7 +21,7 @@ To keep things simple, we will target CLI only. The interface would resemble:
 
 ```sh
 # training
-tinymlkit <model-name> -d <data.txt> -f <model.tmk>
+tinymlkit <model-name> -d <data.txt> -r <replay_buffer.txt> -f <model.tmk>
 # prediction
 tinymlkit <model-name> -d <data.txt> -i <model.tmk> -p <output.txt>
 ``` 
@@ -41,6 +41,25 @@ E.g. if our input `X` is `[1, 20, -3, 4]` and `y` is [2], then the input is:
 ```
 
 This naturally supports sparse formats where elements with the value 0 can be dropped.
+
+**Federated Learning**
+
+As we are using Nelder-Mead method for choosing the weights, and keeping a history of the set weights, we can offer Byzantine resilience when performing federated learning. 
+
+Possible algorithms to support aggregated weights include:
+
+- Coordinate-Wide Median
+- Geometric Mean
+- Mean around median
+
+Proposed interface:
+
+```sh
+tinymlkit <model-name> -r <federated_replay_buffer.txt> -r <federated_replay_buffer.txt> -r <federated_replay_buffer.txt> -f <model.tmk>
+```
+
+Note that the `federated_model.tmk` file may contain summarised information about the underlying model. If `model.tmk` does not exist, it will be created through aggregation. 
+
 
 ## Roadmap
 
