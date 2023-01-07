@@ -36,20 +36,20 @@ func easyjsonEd27195aDecodeMlSchemas(in *jlexer.Lexer, out *LinearModelReplayBuf
 			continue
 		}
 		switch key {
-		case "Weights":
+		case "Coefficient":
 			if in.IsNull() {
 				in.Skip()
-				out.Weights = nil
+				out.Coefficient = nil
 			} else {
 				in.Delim('[')
-				if out.Weights == nil {
+				if out.Coefficient == nil {
 					if !in.IsDelim(']') {
-						out.Weights = make([][]float64, 0, 2)
+						out.Coefficient = make([][]float64, 0, 2)
 					} else {
-						out.Weights = [][]float64{}
+						out.Coefficient = [][]float64{}
 					}
 				} else {
-					out.Weights = (out.Weights)[:0]
+					out.Coefficient = (out.Coefficient)[:0]
 				}
 				for !in.IsDelim(']') {
 					var v1 []float64
@@ -75,7 +75,30 @@ func easyjsonEd27195aDecodeMlSchemas(in *jlexer.Lexer, out *LinearModelReplayBuf
 						}
 						in.Delim(']')
 					}
-					out.Weights = append(out.Weights, v1)
+					out.Coefficient = append(out.Coefficient, v1)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		case "Intercept":
+			if in.IsNull() {
+				in.Skip()
+				out.Intercept = nil
+			} else {
+				in.Delim('[')
+				if out.Intercept == nil {
+					if !in.IsDelim(']') {
+						out.Intercept = make([]float64, 0, 8)
+					} else {
+						out.Intercept = []float64{}
+					}
+				} else {
+					out.Intercept = (out.Intercept)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v3 float64
+					v3 = float64(in.Float64())
+					out.Intercept = append(out.Intercept, v3)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -96,9 +119,9 @@ func easyjsonEd27195aDecodeMlSchemas(in *jlexer.Lexer, out *LinearModelReplayBuf
 					out.Label = (out.Label)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v3 float64
-					v3 = float64(in.Float64())
-					out.Label = append(out.Label, v3)
+					var v4 float64
+					v4 = float64(in.Float64())
+					out.Label = append(out.Label, v4)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -118,28 +141,44 @@ func easyjsonEd27195aEncodeMlSchemas(out *jwriter.Writer, in LinearModelReplayBu
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"Weights\":"
+		const prefix string = ",\"Coefficient\":"
 		out.RawString(prefix[1:])
-		if in.Weights == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+		if in.Coefficient == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v4, v5 := range in.Weights {
-				if v4 > 0 {
+			for v5, v6 := range in.Coefficient {
+				if v5 > 0 {
 					out.RawByte(',')
 				}
-				if v5 == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+				if v6 == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 					out.RawString("null")
 				} else {
 					out.RawByte('[')
-					for v6, v7 := range v5 {
-						if v6 > 0 {
+					for v7, v8 := range v6 {
+						if v7 > 0 {
 							out.RawByte(',')
 						}
-						out.Float64(float64(v7))
+						out.Float64(float64(v8))
 					}
 					out.RawByte(']')
 				}
+			}
+			out.RawByte(']')
+		}
+	}
+	{
+		const prefix string = ",\"Intercept\":"
+		out.RawString(prefix)
+		if in.Intercept == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v9, v10 := range in.Intercept {
+				if v9 > 0 {
+					out.RawByte(',')
+				}
+				out.Float64(float64(v10))
 			}
 			out.RawByte(']')
 		}
@@ -151,11 +190,11 @@ func easyjsonEd27195aEncodeMlSchemas(out *jwriter.Writer, in LinearModelReplayBu
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v8, v9 := range in.Label {
-				if v8 > 0 {
+			for v11, v12 := range in.Label {
+				if v11 > 0 {
 					out.RawByte(',')
 				}
-				out.Float64(float64(v9))
+				out.Float64(float64(v12))
 			}
 			out.RawByte(']')
 		}

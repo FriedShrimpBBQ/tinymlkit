@@ -5,6 +5,7 @@
 package ml_schemas
 
 type LinearModelReplayBuffer struct {
-	Weights [][]float64
-	Label   []float64
+	Coefficient [][]float64
+	Intercept   []float64
+	Label       []float64
 }
