@@ -5,7 +5,7 @@ import (
 )
 
 func TestDatasetJson(t *testing.T) {
-	sampleDataset := &Dataset{}
+	sampleDataset := &LabelledDataset{}
 	sampleDataset.UnmarshalJSON([]byte(`{"Features": [[1,2,3,4]], "Label": [5]}`))
 
 	if sampleDataset.Label[0] != 5.0 {

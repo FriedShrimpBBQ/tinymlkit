@@ -17,7 +17,7 @@ var (
 	_ easyjson.Marshaler
 )
 
-func easyjson60bff0deDecodeMlSchemas(in *jlexer.Lexer, out *Dataset) {
+func easyjson60bff0deDecodeMlSchemas(in *jlexer.Lexer, out *LabelledDataset) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -113,7 +113,7 @@ func easyjson60bff0deDecodeMlSchemas(in *jlexer.Lexer, out *Dataset) {
 		in.Consumed()
 	}
 }
-func easyjson60bff0deEncodeMlSchemas(out *jwriter.Writer, in Dataset) {
+func easyjson60bff0deEncodeMlSchemas(out *jwriter.Writer, in LabelledDataset) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -164,25 +164,155 @@ func easyjson60bff0deEncodeMlSchemas(out *jwriter.Writer, in Dataset) {
 }
 
 // MarshalJSON supports json.Marshaler interface
-func (v Dataset) MarshalJSON() ([]byte, error) {
+func (v LabelledDataset) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
 	easyjson60bff0deEncodeMlSchemas(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
-func (v Dataset) MarshalEasyJSON(w *jwriter.Writer) {
+func (v LabelledDataset) MarshalEasyJSON(w *jwriter.Writer) {
 	easyjson60bff0deEncodeMlSchemas(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
-func (v *Dataset) UnmarshalJSON(data []byte) error {
+func (v *LabelledDataset) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
 	easyjson60bff0deDecodeMlSchemas(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *Dataset) UnmarshalEasyJSON(l *jlexer.Lexer) {
+func (v *LabelledDataset) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjson60bff0deDecodeMlSchemas(l, v)
+}
+func easyjson60bff0deDecodeMlSchemas1(in *jlexer.Lexer, out *Dataset) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "Features":
+			if in.IsNull() {
+				in.Skip()
+				out.Features = nil
+			} else {
+				in.Delim('[')
+				if out.Features == nil {
+					if !in.IsDelim(']') {
+						out.Features = make([][]float64, 0, 2)
+					} else {
+						out.Features = [][]float64{}
+					}
+				} else {
+					out.Features = (out.Features)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v10 []float64
+					if in.IsNull() {
+						in.Skip()
+						v10 = nil
+					} else {
+						in.Delim('[')
+						if v10 == nil {
+							if !in.IsDelim(']') {
+								v10 = make([]float64, 0, 8)
+							} else {
+								v10 = []float64{}
+							}
+						} else {
+							v10 = (v10)[:0]
+						}
+						for !in.IsDelim(']') {
+							var v11 float64
+							v11 = float64(in.Float64())
+							v10 = append(v10, v11)
+							in.WantComma()
+						}
+						in.Delim(']')
+					}
+					out.Features = append(out.Features, v10)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjson60bff0deEncodeMlSchemas1(out *jwriter.Writer, in Dataset) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"Features\":"
+		out.RawString(prefix[1:])
+		if in.Features == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v12, v13 := range in.Features {
+				if v12 > 0 {
+					out.RawByte(',')
+				}
+				if v13 == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+					out.RawString("null")
+				} else {
+					out.RawByte('[')
+					for v14, v15 := range v13 {
+						if v14 > 0 {
+							out.RawByte(',')
+						}
+						out.Float64(float64(v15))
+					}
+					out.RawByte(']')
+				}
+			}
+			out.RawByte(']')
+		}
+	}
+	out.RawByte('}')
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v Dataset) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjson60bff0deEncodeMlSchemas1(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v Dataset) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjson60bff0deEncodeMlSchemas1(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *Dataset) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjson60bff0deDecodeMlSchemas1(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *Dataset) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjson60bff0deDecodeMlSchemas1(l, v)
 }
