@@ -12,7 +12,7 @@ func randomOptimSingleIter(objFunc ObjectiveFunction, x0 []float64) []float64 {
 	// run single iteration - returns a new updated x0
 	x1 := []float64{}
 	for i := 0; i < len(x0); i++ {
-		x1 = append(x1, x0[i]+rand.Float64()-0.5)
+		x1 = append(x1, x0[i]+(rand.Float64()-0.5)*2)
 	}
 
 	if objFunc(x0) < objFunc(x1) {
