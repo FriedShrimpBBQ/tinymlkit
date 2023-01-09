@@ -12,3 +12,11 @@ with open("diabetes_dataset.json", "w") as f:
 ```
 
 This follows the schema presented in `tinymlkit`
+
+Running this example is as simple as:
+
+```sh
+$ go run . -json_data diabetes_dataset.json -penalty elasticnet -max_iter 10000
+```
+
+Although its not packaged as proper idiomatic go, this is indeed a start!

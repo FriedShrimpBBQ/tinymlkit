@@ -21,26 +21,21 @@ To keep things simple, we will target CLI only. The interface would resemble:
 
 ```sh
 # training
-tinymlkit <model-name> -d <data.txt> -f <model.tmk>
+tinymlkit <model-name> -json_data /path/to/json/data <model-options>
 # prediction
-tinymlkit <model-name> -d <data.txt> -i <model.tmk> -p <output.txt>
+tinymlkit <model-name> -json_data /path/to/json/data <model-loading-options>
 ``` 
 
 Because of the nature of TinyGo, it may end up that each model is its own "thing" that is built. We'll deal with that later, and perhaps use a code generator to switch between Go and TinyGo. 
 
-The format of `data.txt` should simply be sparse arrays in format:
+The format of the data is in `json` so that it can be serialised/deserialised in go easily.
 
 ```
-<label> | <index>:value
+{
+	"Features": [[1,2,3],[4,5,6]],
+	"Label": [7,8]
+}
 ```
-
-E.g. if our input `X` is `[1, 20, -3, 4]` and `y` is [2], then the input is:
-
-```
-2 | 0:1 1:20 2:-3 3:4
-```
-
-This naturally supports sparse formats where elements with the value 0 can be dropped.
 
 ## Roadmap
 
@@ -54,8 +49,10 @@ Later stage: export to `onnx` if this becomes a thing.
 
 The purpose of this project isn't machine learning, its for me to learn Go and get acquainted with WASM. As such, we're going to concentrate on a small set of algorithms and see how far we go:
 
-- Derivative free optimization approaches - [Nelder-Mead](https://en.wikipedia.org/wiki/Nelder%E2%80%93Mead_method)) which can be applied to a variety of contexts
+- Randomised Optimisation
 - Non-parametric bounds - Hoeffding inequality for drawing inferrences on streams
+
+... other optimisation algorithms as we go, perhaps a lightweight auto-diff implementation for example
 
 ## Inspirations
 

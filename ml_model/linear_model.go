@@ -76,9 +76,8 @@ func (linear_model LinearModel) SetWeightsAndCopy(weights []float64) LinearModel
 	return linear_model
 }
 
-
 func sampleValue() float64 {
-	return (rand.Float64()-0.5)*2
+	return (rand.Float64() - 0.5) * 2
 }
 
 func LinearModelInitWeights(numFeatures int) []float64 {
@@ -88,7 +87,6 @@ func LinearModelInitWeights(numFeatures int) []float64 {
 	}
 	return weights
 }
-
 
 func LinearModelMSEObjective(linearModelObj ml_schemas.LinearModel, data ml_schemas.LabelledDataset) optim.ObjectiveFunction {
 	// initial value is created through LinearModelMapper(...)

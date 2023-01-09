@@ -1,6 +1,5 @@
 package ml_schemas
 
-
 type LabelledDataset struct {
 	Features [][]float64
 	Label    []float64
