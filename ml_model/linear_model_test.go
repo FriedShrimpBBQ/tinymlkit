@@ -62,8 +62,8 @@ func TestOptimFuncGenerator(t *testing.T) {
 	lm := LinearModel{*sampleLinearModel}
 	labelledDataset := ml_schemas.LabelledDataset{dataset, label}
 
-	x0 := LinearModelMSEObjective(lm.lm, labelledDataset)([]float64{1.0, 2.0, 3.0, 4.0})
-	x1 := LinearModelMSEObjective(lm.lm, labelledDataset)([]float64{4.0, 3.0, 2.0, 1.0})
+	x0 := LinearModelMSEObjective(lm.Lm, labelledDataset)([]float64{1.0, 2.0, 3.0, 4.0})
+	x1 := LinearModelMSEObjective(lm.Lm, labelledDataset)([]float64{4.0, 3.0, 2.0, 1.0})
 
 	if x0 != x1 {
 		t.Fatalf("Incorrect mse loss value when using mse objective")
