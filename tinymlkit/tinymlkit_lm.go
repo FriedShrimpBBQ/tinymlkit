@@ -44,4 +44,11 @@ func main() {
 	// train the model
 	x1 := optim.RandomOptim(ml_model.LinearModelMSEObjective(lm.Lm, *labelledDataset), lm.LinearModelMapper(), max_iter)
 	fmt.Println("After Optim\t", lm.SetWeightsAndCopy(x1).MSELoss(*labelledDataset))
+	fmt.Println("Optim iter 2\t", lm.SetWeightsAndCopy(x1).FitAndCopy(*labelledDataset, 1000).MSELoss(*labelledDataset))
+
+	// setup bagging example
+	bagging_setup := ml_schemas.BaggingLinearModel{[]ml_schemas.LinearModel{baseLM, baseLM}, 1}
+	bagging_lm := ml_model.BaggingLinearModel{bagging_setup}
+	output := bagging_lm.FitAndCopy(*labelledDataset, 10)
+	fmt.Println("Bagging Output", output)
 }
