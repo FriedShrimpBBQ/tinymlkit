@@ -95,3 +95,8 @@ func LinearModelMSEObjective(linearModelObj ml_schemas.LinearModel, data ml_sche
 		return lm.MSELoss(data)
 	}
 }
+
+func (linear_model LinearModel) FitAndCopy(data ml_schemas.LabelledDataset, max_iter int) LinearModel {
+	x1 := optim.RandomOptim(LinearModelMSEObjective(linear_model.Lm, data), linear_model.LinearModelMapper(), max_iter)
+	return linear_model.SetWeightsAndCopy(x1)
+}
